@@ -261,7 +261,7 @@ class AIService:
         total_tasks = len(tasks)
         done_tasks = [t for t in tasks if t.status == TaskStatus.DONE]
         in_progress_tasks = [t for t in tasks if t.status == TaskStatus.IN_PROGRESS]
-        urgent_tasks = [t for t in tasks if t.priority == Priority.URGENT and t.status != TaskStatus.DONE]
+        urgent_tasks = [t for t in tasks if t.priority == PriorityLevel.URGENT and t.status != TaskStatus.DONE]
         overdue_tasks = [
             t for t in tasks
             if t.status != TaskStatus.DONE and t.due_date and t.due_date < datetime.now(timezone.utc).date()
