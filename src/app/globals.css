@@ -1,26 +1,255 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-bg: var(--bg-primary);
+  --color-brand-sidebar: var(--bg-sidebar);
+  --color-brand-card: var(--bg-card);
+  --color-brand-card-hover: var(--bg-card-hover);
+  --color-brand-border: var(--border-color);
+  --color-brand-border-light: var(--border-light);
+  --color-brand-text: var(--text-primary);
+  --color-brand-muted: var(--text-secondary);
+  --color-brand-accent: var(--accent);
+  --color-brand-accent-hover: var(--accent-hover);
+  --color-brand-accent-subtle: var(--accent-subtle);
+  --color-brand-success: #22C55E;
+  --color-brand-warning: #F59E0B;
+  --color-brand-danger: #EF4444;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #0B0D12;
+  --bg-sidebar: #10131A;
+  --bg-card: #151922;
+  --bg-card-hover: #1B202C;
+  --border-color: #252B36;
+  --border-light: #323A4A;
+  --text-primary: #F5F7FA;
+  --text-secondary: #929AAA;
+  --accent: #8B7CFF;
+  --accent-hover: #7968EE;
+  --accent-subtle: rgba(139, 124, 255, 0.16);
+  --accent-glow: rgba(139, 124, 255, 0.35);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme="midnight"] {
+  --bg-primary: #000000;
+  --bg-sidebar: #050608;
+  --bg-card: #090C11;
+  --bg-card-hover: #121620;
+  --border-color: #1A1F2B;
+  --border-light: #252B36;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+::selection {
+  background: var(--accent-subtle);
+  color: #FFFFFF;
+}
+
+/* Custom Linear-style Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-light);
+}
+
+/* Glass & Border Utilities */
+.flowstate-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flowstate-card:hover {
+  border-color: var(--border-light);
+}
+
+.flowstate-glow {
+  box-shadow: 0 0 25px -5px var(--accent-subtle);
+}
+
+.flowstate-input {
+  background-color: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.flowstate-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-subtle);
+}
+
+/* Dynamic Midnight Theme overrides for existing Tailwind utility classes */
+[data-theme="midnight"] .bg-\[\#0B0D12\] {
+  background-color: var(--bg-primary) !important;
+}
+[data-theme="midnight"] .bg-\[\#0B0D12\]\/80 {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+[data-theme="midnight"] .bg-\[\#0B0D12\]\/95 {
+  background-color: rgba(0, 0, 0, 0.95) !important;
+}
+[data-theme="midnight"] .bg-\[\#10131A\] {
+  background-color: var(--bg-sidebar) !important;
+}
+[data-theme="midnight"] .bg-\[\#10131A\]\/60 {
+  background-color: rgba(5, 6, 8, 0.6) !important;
+}
+[data-theme="midnight"] .bg-\[\#151922\] {
+  background-color: var(--bg-card) !important;
+}
+[data-theme="midnight"] .bg-\[\#151922\]\/50 {
+  background-color: rgba(9, 12, 17, 0.5) !important;
+}
+[data-theme="midnight"] .bg-\[\#151922\]\/60 {
+  background-color: rgba(9, 12, 17, 0.6) !important;
+}
+[data-theme="midnight"] .bg-\[\#1B202C\] {
+  background-color: var(--bg-card-hover) !important;
+}
+[data-theme="midnight"] .hover\:bg-\[\#1A202C\]:hover {
+  background-color: var(--bg-card-hover) !important;
+}
+[data-theme="midnight"] .hover\:bg-\[\#1B202C\]:hover {
+  background-color: var(--bg-card-hover) !important;
+}
+[data-theme="midnight"] .border-\[\#252B36\] {
+  border-color: var(--border-color) !important;
+}
+[data-theme="midnight"] .border-\[\#323A4A\] {
+  border-color: var(--border-light) !important;
+}
+
+/* Dynamic Accent Overrides */
+.text-\[\#8B7CFF\] {
+  color: var(--accent) !important;
+}
+.bg-\[\#8B7CFF\] {
+  background-color: var(--accent) !important;
+}
+.border-\[\#8B7CFF\] {
+  border-color: var(--accent) !important;
+}
+.ring-\[\#8B7CFF\] {
+  --tw-ring-color: var(--accent) !important;
+}
+.accent-\[\#8B7CFF\] {
+  accent-color: var(--accent) !important;
+}
+.hover\:bg-\[\#7968EE\]:hover,
+.hover\:bg-\[\#7A69EE\]:hover {
+  background-color: var(--accent-hover) !important;
+}
+.shadow-\[\#8B7CFF\]\/20,
+.shadow-\[\#8B7CFF\]\/30 {
+  --tw-shadow-color: var(--accent-subtle) !important;
+}
+.bg-\[\#8B7CFF\]\/10,
+.bg-\[\#8B7CFF\]\/15,
+.bg-\[\#8B7CFF\]\/20 {
+  background-color: var(--accent-subtle) !important;
+}
+.border-\[\#8B7CFF\]\/20,
+.border-\[\#8B7CFF\]\/30 {
+  border-color: var(--accent-subtle) !important;
+}
+
+/* Auth & Modern SaaS Animations */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(-0.5deg);
+  }
 }
+
+@keyframes border-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 15px -3px var(--accent-subtle), 0 0 0 1px var(--border-color);
+  }
+  50% {
+    box-shadow: 0 0 30px -2px var(--accent-glow), 0 0 0 1px var(--accent);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes gradient-xy {
+  0%, 100% {
+    background-size: 400% 400%;
+    background-position: 0% 50%;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: 100% 50%;
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 9s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: border-glow-pulse 4s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s infinite;
+}
+
+.animate-gradient-xy {
+  animation: gradient-xy 12s ease infinite;
+}
+
