@@ -165,3 +165,47 @@ export interface FilterOptions {
   sortBy?: string;
   sortDirection?: 'asc' | 'desc';
 }
+
+// ==========================================
+// AI Intelligence Types
+// ==========================================
+export interface AISubtaskItem {
+  title: string;
+  description?: string;
+}
+
+export interface AISubtaskGenerationResponse {
+  suggested_title: string;
+  description: string;
+  estimated_hours: number;
+  priority: Priority;
+  subtasks: AISubtaskItem[];
+  labels: string[];
+}
+
+export interface AIAssigneeSuggestionResponse {
+  recommended_user_id?: string;
+  recommended_user_name?: string;
+  confidence: number;
+  reasoning: string;
+  suggested_hours: number;
+}
+
+export interface AIChatMessage {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
+
+export interface AIChatResponse {
+  reply: string;
+  references?: Array<Record<string, any>>;
+}
+
+export interface AISprintRetroResponse {
+  markdown_report: string;
+  summary: string;
+  highlights: string[];
+  bottlenecks: string[];
+  recommendations: string[];
+}
+

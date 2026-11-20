@@ -33,6 +33,7 @@ export function TopNav({ onMobileMenuToggle }: { onMobileMenuToggle?: () => void
   const { success } = useToast();
   const {
     openSearch,
+    openCopilot,
     openCreateTask,
     openCreateProject,
     notifications,
@@ -120,6 +121,19 @@ export function TopNav({ onMobileMenuToggle }: { onMobileMenuToggle?: () => void
 
       {/* Right: Global Search, Create Button, Notifications, Avatar */}
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        {/* AI Copilot Button Trigger */}
+        <button
+          onClick={openCopilot}
+          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-[#8B7CFF]/15 hover:bg-[#8B7CFF]/25 border border-[#8B7CFF]/30 hover:border-[#8B7CFF]/50 rounded-lg text-xs text-[#8B7CFF] hover:text-white transition-all cursor-pointer shadow-sm group"
+          title="Open AI Copilot (⌘J)"
+        >
+          <Sparkles className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform text-[#8B7CFF]" />
+          <span className="hidden sm:inline font-semibold">Copilot</span>
+          <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] bg-[#10131A] text-[#8B7CFF] border border-[#8B7CFF]/30 rounded font-mono">
+            <span className="text-[11px]">⌘</span>J
+          </kbd>
+        </button>
+
         {/* Global Search Bar Trigger */}
         <button
           onClick={openSearch}

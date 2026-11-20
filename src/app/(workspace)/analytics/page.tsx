@@ -30,7 +30,9 @@ import {
   Users,
   Zap,
   Download,
+  Sparkles,
 } from 'lucide-react';
+import { SprintRetroModal } from '@/components/ai/SprintRetroModal';
 
 export default function AnalyticsPage() {
   const { allUsers } = useAuth();
@@ -38,6 +40,7 @@ export default function AnalyticsPage() {
 
   const [mounted, setMounted] = useState(false);
   const [timeframe, setTimeframe] = useState<'7d' | '30d' | '90d'>('30d');
+  const [isRetroModalOpen, setIsRetroModalOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -194,6 +197,15 @@ export default function AnalyticsPage() {
         </div>
 
         <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            onClick={() => setIsRetroModalOpen(true)}
+            className="cursor-pointer gap-1.5 shadow-sm shadow-[#8B7CFF]/20"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>AI Sprint Retro</span>
+          </Button>
+
           <Button
             variant="outline"
             size="sm"
@@ -477,6 +489,12 @@ export default function AnalyticsPage() {
           </div>
         </div>
       </div>
+
+      {/* AI Retrospective Modal */}
+      <SprintRetroModal
+        isOpen={isRetroModalOpen}
+        onClose={() => setIsRetroModalOpen(false)}
+      />
     </div>
   );
 }

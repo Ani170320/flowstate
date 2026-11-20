@@ -7,6 +7,7 @@ import { GlobalSearchModal } from './GlobalSearchModal';
 import { CreateTaskModal } from '@/components/tasks/CreateTaskModal';
 import { CreateProjectModal } from '@/components/projects/CreateProjectModal';
 import { TaskDetailModal } from '@/components/tasks/TaskDetailModal';
+import { AICopilotModal } from '@/components/ai/AICopilotModal';
 import { X } from 'lucide-react';
 
 export function WorkspaceLayout({ children }: { children: React.ReactNode }) {
@@ -52,6 +53,7 @@ export function WorkspaceLayout({ children }: { children: React.ReactNode }) {
       <CreateTaskModal />
       <CreateProjectModal />
       <TaskDetailModal />
+      <AICopilotModal />
     </div>
   );
 }

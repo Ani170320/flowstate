@@ -12,6 +12,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
 import { TaskStatus, Priority, Comment } from '@/types';
 import { taskService } from '@/services/taskService';
+import { aiService } from '@/services/aiService';
 import {
   Calendar,
   CheckCircle2,
@@ -28,6 +29,7 @@ import {
   FileText,
   Download,
   Loader2,
+  Sparkles,
 } from 'lucide-react';
 import { formatReadableDate, formatRelativeTime, isTaskOverdue } from '@/lib/utils';
 
@@ -54,6 +56,7 @@ export function TaskDetailModal() {
   const [newComment, setNewComment] = useState('');
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isGeneratingSubtasks, setIsGeneratingSubtasks] = useState(false);
 
   // Attachments State
   const [attachments, setAttachments] = useState<any[]>([]);
@@ -170,6 +173,31 @@ export function TaskDetailModal() {
     if (!newSubtaskTitle.trim()) return;
     await addSubtask(selectedTask.id, newSubtaskTitle.trim());
     setNewSubtaskTitle('');
+  };
+
+  const handleAIGenerateSubtasks = async () => {
+    if (!selectedTask) return;
+    setIsGeneratingSubtasks(true);
+    try {
+      const result = await aiService.generateSubtasks(
+        selectedTask.title,
+        selectedTask.description,
+        selectedTask.labels
+      );
+
+      if (result.subtasks && result.subtasks.length > 0) {
+        for (const st of result.subtasks) {
+          await addSubtask(selectedTask.id, st.title);
+        }
+        success('AI Subtasks Created', `Added ${result.subtasks.length} subtasks to this task.`);
+      } else {
+        success('Decomposition Complete', 'Task requirements already concise.');
+      }
+    } catch (err: any) {
+      error('AI Error', err?.message || 'Could not generate subtasks.');
+    } finally {
+      setIsGeneratingSubtasks(false);
+    }
   };
 
   const handleAddComment = async (e: React.FormEvent) => {
@@ -401,9 +429,32 @@ export function TaskDetailModal() {
                 ({completedSubtasksCount}/{totalSubtasksCount})
               </span>
             </div>
-            {totalSubtasksCount > 0 && (
-              <span className="text-xs font-mono text-[#8B7CFF]">{subtaskProgress}%</span>
-            )}
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleAIGenerateSubtasks}
+                disabled={isGeneratingSubtasks}
+                className="flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium bg-[#8B7CFF]/15 hover:bg-[#8B7CFF]/25 border border-[#8B7CFF]/30 text-[#8B7CFF] rounded-lg transition-colors cursor-pointer disabled:opacity-50"
+                title="Automatically generate subtasks with AI"
+              >
+                {isGeneratingSubtasks ? (
+                  <>
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                    <span>Generating...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-3 h-3" />
+                    <span>AI Generate</span>
+                  </>
+                )}
+              </button>
+
+              {totalSubtasksCount > 0 && (
+                <span className="text-xs font-mono text-[#8B7CFF]">{subtaskProgress}%</span>
+              )}
+            </div>
           </div>
 
           {/* Subtask progress bar */}
