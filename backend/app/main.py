@@ -8,6 +8,7 @@ from app.core.config import settings
 from app.core.exceptions import register_exception_handlers
 from app.database.connection import close_database_connections
 from app.routes.activities import router as activities_router
+from app.routes.ai import router as ai_router
 from app.routes.attachments import router as attachments_router
 from app.routes.auth import router as auth_router
 from app.routes.calendar import router as calendar_router
@@ -86,6 +87,7 @@ app.include_router(activities_router, prefix=settings.API_V1_PREFIX)
 app.include_router(notifications_router, prefix=settings.API_V1_PREFIX)
 app.include_router(calendar_router, prefix=settings.API_V1_PREFIX)
 app.include_router(dashboard_router, prefix=settings.API_V1_PREFIX)
+app.include_router(ai_router, prefix=settings.API_V1_PREFIX)
 
 
 @app.get("/", include_in_schema=False)

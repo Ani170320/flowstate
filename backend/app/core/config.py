@@ -65,6 +65,11 @@ class Settings(BaseSettings):
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     ]
 
+    # AI & LLM Configuration
+    GEMINI_API_KEY: Optional[str] = None
+    OPENAI_API_KEY: Optional[str] = None
+    AI_MODEL: str = "gemini-2.0-flash"
+
     @property
     def jwt_secret(self) -> str:
         """

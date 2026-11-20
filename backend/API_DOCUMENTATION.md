@@ -49,6 +49,7 @@ X-Organization-Id: <ORGANIZATION_UUID>   # Optional: defaults to active organiza
 - [11. Activity Stream & Audit Log](#11-activity-stream--audit-log)
 - [12. Notifications](#12-notifications)
 - [13. System Health](#13-system-health)
+- [14. AI Intelligence & Copilot Engine](#14-ai-intelligence--copilot-engine)
 
 ---
 
@@ -499,3 +500,125 @@ Probe server availability and system uptime:
   "version": "1.0.0"
 }
 ```
+
+---
+
+## 14. AI Intelligence & Copilot Engine
+
+Advanced workspace reasoning powered by Google Gemini and OpenAI with intelligent client-aware fallback heuristics.
+
+### `POST /ai/subtasks`
+Decomposes a high-level task title or PRD requirement into structured subtasks, estimated hours, priority, and relevant tags.
+
+**Request Body:**
+```json
+{
+  "title": "Implement Stripe Subscription Billing & Webhooks",
+  "description": "Customer payment processing with automated invoice receipt",
+  "labels": ["Billing", "Backend"]
+}
+```
+
+**Response (`200 OK`):**
+```json
+{
+  "suggested_title": "Implement Stripe Subscription Billing & Webhooks",
+  "description": "Enterprise implementation for Customer payment processing with automated invoice receipt.",
+  "estimated_hours": 16,
+  "priority": "high",
+  "subtasks": [
+    { "title": "Design schema & data contracts", "description": null },
+    { "title": "Implement core API endpoints and middleware", "description": null },
+    { "title": "Integrate frontend UI and state management", "description": null },
+    { "title": "Write comprehensive unit and integration tests", "description": null },
+    { "title": "Add telemetry, error boundaries, and documentation", "description": null }
+  ],
+  "labels": ["Billing", "Backend", "AI-Generated"]
+}
+```
+
+---
+
+### `POST /ai/suggest-assignee`
+Recommends the best team member based on active workloads and department skills.
+
+**Request Body:**
+```json
+{
+  "task_title": "Fix UI latency in Kanban drag and drop",
+  "task_description": "Optimize React renders and CSS animations",
+  "department": "Engineering"
+}
+```
+
+**Response (`200 OK`):**
+```json
+{
+  "recommended_user_id": "c1f7a288-75d1-4e7a-9a99-b1d6f5f3e9a1",
+  "recommended_user_name": "Jane Doe",
+  "confidence": 0.88,
+  "reasoning": "Jane Doe has high domain skill in Frontend/Engineering and currently has the lowest active task count (2 tasks).",
+  "suggested_hours": 6
+}
+```
+
+---
+
+### `POST /ai/chat`
+Answers natural language questions about projects, tasks, bottlenecks, and workloads.
+
+**Request Body:**
+```json
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are the main blockers and urgent tasks in our workspace?"
+    }
+  ],
+  "context_scope": "workspace"
+}
+```
+
+**Response (`200 OK`):**
+```json
+{
+  "reply": "### 🔍 Workspace Analysis\n\n- **Urgent Blockers:** Found 2 urgent tasks currently in progress.\n- **Velocity:** 18 tasks completed this sprint with an 84% on-time completion rate.",
+  "references": null
+}
+```
+
+---
+
+### `POST /ai/retrospective`
+Synthesizes sprint metrics, achievements, bottlenecks, and action items into an executive report.
+
+**Request Body:**
+```json
+{
+  "timeframe_days": 14
+}
+```
+
+**Response (`200 OK`):**
+```json
+{
+  "summary": "Sprint Retrospective synthesis over the last 14 days shows strong engineering delivery with key opportunities in review turnaround speed.",
+  "highlights": [
+    "Delivered 14 tasks with 85% sprint completion rate.",
+    "0 critical production regressions reported.",
+    "Cross-functional alignment maintained."
+  ],
+  "bottlenecks": [
+    "Code review wait times averaged 28+ hours on multi-file PRs.",
+    "Dependency wait times on external APIs."
+  ],
+  "recommendations": [
+    "Institute a 4-hour review SLA for high-priority items.",
+    "Decompose epics into smaller subtasks under 8 estimated hours.",
+    "Conduct mid-sprint capacity check-ins."
+  ],
+  "markdown_report": "# Sprint Retrospective Report (14-Day Cycle)..."
+}
+```
+

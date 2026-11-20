@@ -62,6 +62,12 @@ interface WorkspaceContextType {
   selectedTask: Task | null;
   openTaskDetail: (task: Task) => void;
   closeTaskDetail: () => void;
+
+  // AI Copilot Modal
+  isCopilotOpen: boolean;
+  openCopilot: () => void;
+  closeCopilot: () => void;
+  toggleCopilot: () => void;
 }
 
 const WorkspaceContext = createContext<WorkspaceContextType | undefined>(undefined);
@@ -85,6 +91,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   const [projectToEdit, setProjectToEdit] = useState<Project | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isCopilotOpen, setIsCopilotOpen] = useState(false);
 
   const refreshData = useCallback(async () => {
     try {
@@ -444,6 +451,10 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
         selectedTask,
         openTaskDetail: (t) => setSelectedTask(t),
         closeTaskDetail: () => setSelectedTask(null),
+        isCopilotOpen,
+        openCopilot: () => setIsCopilotOpen(true),
+        closeCopilot: () => setIsCopilotOpen(false),
+        toggleCopilot: () => setIsCopilotOpen((prev) => !prev),
       }}
     >
       {children}

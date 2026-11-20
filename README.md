@@ -14,6 +14,11 @@ FLOWSTATE is a high-velocity, real-time engineering operations and project intel
 
 - **Multi-Tenant Organization Workspaces:**
   - Secure tenant isolation with organization switching, role-based access control (`owner`, `admin`, `tech_lead`, `developer`, `viewer`), and auto-provisioning for invited members.
+- **AI Workspace Intelligence & Copilot Engine:**
+  - **AI Task / PRD Decomposition:** 1-click feature breakdown generating structured subtasks, effort estimations, priority scoring, and labels.
+  - **AI Workload & Assignee Recommendation:** Intelligent capacity-aware matching recommending the ideal team member based on active sprint workloads.
+  - **AI Workspace Copilot (`⌘J` / `Ctrl+J`):** Floating conversational copilot answering natural-language inquiries on sprint velocity, blockers, and workloads.
+  - **AI Sprint Retrospective & Executive Synthesis:** Automated retrospective synthesis highlighting sprint achievements, bottlenecks, and strategic actions with Markdown export.
 - **Interactive Kanban & Task Pipelines:**
   - Drag-and-drop task workflow boards (`backlog`, `todo`, `in_progress`, `in_review`, `done`) with real-time status updates and priority scoring (`low`, `medium`, `high`, `urgent`).
 - **Task Attachments & Binary Storage:**
