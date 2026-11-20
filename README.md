@@ -49,8 +49,11 @@ flowstate/
 │   │   ├── schemas/              # Pydantic v2 validation models
 │   │   └── services/             # Storage, notification, and activity services
 │   └── tests/                    # Pytest test suite (unit and integration tests)
+├── API_DOCUMENTATION.md          # Complete REST API reference & examples
 └── README.md
 ```
+
+> 📖 **API Reference:** For comprehensive request/response payloads, authentication headers, and cURL examples, see [API_DOCUMENTATION.md](API_DOCUMENTATION.md).
 
 ### Technology Matrix
 | Layer | Technologies |
